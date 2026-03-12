@@ -31,9 +31,10 @@ or
 
 To build the code you need:
 
-* [Microsoft Visual Studio 2022 Community Edition](https://visualstudio.microsoft.com/downloads/) or later
+* [Microsoft Visual Studio 2026 Community Edition](https://visualstudio.microsoft.com/downloads/) or later
 * [foobar2000 SDK](https://www.foobar2000.org/SDK) 2025-03-07
 * [Windows Template Library (WTL)](https://github.com/Win32-WTL/WTL) 10.0.10320
+* Visual Studio 2022 Toolset (v143)
 
 To create the deployment package you need:
 
