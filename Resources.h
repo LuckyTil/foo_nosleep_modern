@@ -1,0 +1,70 @@
+/** $VER: Resources.h (2026.03.12) TIL **/
+
+#pragma once
+
+#define TOSTRING_IMPL(x) #x
+#define TOSTRING(x) TOSTRING_IMPL(x)
+
+#define NUM_FILE_MAJOR          1
+#define NUM_FILE_MINOR          0
+#define NUM_FILE_PATCH          3
+#define NUM_FILE_PRERELEASE     0
+
+#define NUM_PRODUCT_MAJOR       1
+#define NUM_PRODUCT_MINOR       0
+#define NUM_PRODUCT_PATCH       3
+#define NUM_PRODUCT_PRERELEASE  0
+
+#define STR_RELEASE_TAG         ""
+
+#define GUID_COMPONENT      { 0xfcd5756a,0x1db5,0x4783,{0xa0,0x74,0xe5,0xc1,0xc1,0x06,0x4e,0xe6 }}
+#define GUID_PREFERENCES    { 0xea2369b2,0xf82e,0x425a,{0xbd,0x39,0x2f,0x4d,0xcf,0xe1,0x9e,0x38 }}
+
+/** Component specific **/
+
+#define STR_COMPONENT_NAME          "NoSleep (modern)"
+#define STR_COMPONENT_VERSION       TOSTRING(NUM_FILE_MAJOR) "." TOSTRING(NUM_FILE_MINOR) "." TOSTRING(NUM_FILE_PATCH) "." TOSTRING(NUM_FILE_PRERELEASE) STR_RELEASE_TAG
+#define STR_COMPONENT_VERSION_SHORT TOSTRING(NUM_FILE_MAJOR) "." TOSTRING(NUM_FILE_MINOR) "." TOSTRING(NUM_FILE_PATCH) STR_RELEASE_TAG
+#define STR_COMPONENT_BASENAME      "foo_nosleep_modern"
+#define STR_COMPONENT_FILENAME      STR_COMPONENT_BASENAME ".dll"
+#define STR_COMPONENT_COMPANY_NAME  ""
+#define STR_COMPONENT_COPYRIGHT     "Copyright (c) 2026 TIL. All rights reserved."
+#define STR_COMPONENT_COMMENTS      ""
+#define STR_COMPONENT_DESCRIPTION   "Disable automatic system sleep while foobar2000 playback is running"
+#define STR_COMPONENT_COMMENT       ""
+#define STR_COMPONENT_URL           "https://github.com/LuckyTIL/" STR_COMPONENT_BASENAME
+
+/** Generic **/
+
+#define STR_COMPANY_NAME        TEXT(STR_COMPONENT_COMPANY_NAME)
+#define STR_INTERNAL_NAME       TEXT(STR_COMPONENT_NAME)
+#define STR_COMMENTS            TEXT(STR_COMPONENT_COMMENTS)
+#define STR_COPYRIGHT           TEXT(STR_COMPONENT_COPYRIGHT)
+
+#define STR_FILE_NAME           TEXT(STR_COMPONENT_FILENAME)
+#define STR_FILE_VERSION        TEXT(STR_COMPONENT_VERSION)
+#define STR_FILE_DESCRIPTION    TEXT(STR_COMPONENT_DESCRIPTION)
+
+#define STR_PRODUCT_NAME        STR_INTERNAL_NAME
+#define STR_PRODUCT_VERSION     TEXT(TOSTRING(NUM_PRODUCT_MAJOR)) TEXT(".") TEXT(TOSTRING(NUM_PRODUCT_MINOR)) TEXT(".") TEXT(TOSTRING(NUM_PRODUCT_PATCH)) TEXT(".") TEXT(TOSTRING(NUM_PRODUCT_PRERELEASE)) TEXT(STR_RELEASE_TAG)
+
+#define STR_ABOUT_NAME          STR_INTERNAL_NAME
+#define STR_ABOUT_WEB           TEXT(STR_COMPONENT_URL)
+#define STR_ABOUT_EMAIL         TEXT("mailto:lucky.til@gmail.com")
+
+/** Preferences **/
+
+#define IDD_PREFERENCES             1000
+#define IDD_PREFERENCES_NAME        STR_COMPONENT_NAME
+
+#define IDC_SAMPLES_PATH            IDD_PREFERENCES + 1
+#define IDC_SAMPLES_PATH_SELECT     IDC_SAMPLES_PATH + 1
+
+#define IDC_PLAYBACK_MODE           IDC_SAMPLES_PATH_SELECT + 1
+#define IDC_LOOP_COUNT              IDC_PLAYBACK_MODE + 1
+#define IDC_FADE_OUT_DURATION       IDC_LOOP_COUNT + 1
+
+#define IDC_SYNTHESIS_RATE          IDC_FADE_OUT_DURATION + 1
+
+#define IDC_USE_PPS                 IDC_SYNTHESIS_RATE + 1
+#define IDC_USE_SSG                 IDC_USE_PPS + 1
