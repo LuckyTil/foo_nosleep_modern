@@ -60,7 +60,7 @@ Create the following directory structure:
 
 ### Building
 
-Open `foo_nosleep_modern.sln` with Visual Studio and build the solution.
+Open `foo_nosleep_modern.slnx` with Visual Studio and build the solution.
 
 ### Packaging
 
