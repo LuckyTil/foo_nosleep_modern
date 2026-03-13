@@ -1,13 +1,10 @@
-// foo_nosleep_modern - modern foobar2000 component
-// Prevents Windows system sleep while playback is active.
+// foo_nosleep_modern - foobar2000 component
+// Disable automatic system sleep while foobar2000 playback is running
 
 #include "pch.h"
 #include <Resources.h>
 #include <windows.h>
 #include <foobar2000.h>
-
-// foo_nosleep_modern - modern foobar2000 component
-// Disable automatic system sleep while foobar2000 playback is running
 
 class nosleep_callback : public play_callback_static {
     static bool g_active;
@@ -18,12 +15,12 @@ public:
 
         g_active = active;
 
-        if( active ) {
-            ::SetThreadExecutionState( ES_CONTINUOUS | ES_SYSTEM_REQUIRED );
-        }
-        else {
-            ::SetThreadExecutionState( ES_CONTINUOUS );
-        }
+        const EXECUTION_STATE state = active
+                                          ? (ES_CONTINUOUS | ES_SYSTEM_REQUIRED)
+                                          : ES_CONTINUOUS;
+
+        const EXECUTION_STATE prev = ::SetThreadExecutionState( state );
+        (void)prev;
     }
 
     ~nosleep_callback() noexcept {
@@ -50,26 +47,45 @@ public:
         refresh( false );
     }
 
-    void on_playback_seek( double ) override {}
+    void on_playback_seek( double ) override {
+    }
 
     void on_playback_pause( bool state ) override {
         refresh( !state );
     }
 
-    void on_playback_edited( metadb_handle_ptr ) override {}
+    void on_playback_edited( metadb_handle_ptr ) override {
+    }
 
-    void on_playback_dynamic_info( const file_info& ) override {}
+    void on_playback_dynamic_info( const file_info& ) override {
+    }
 
-    void on_playback_dynamic_info_track( const file_info& ) override {}
+    void on_playback_dynamic_info_track( const file_info& ) override {
+    }
 
-    void on_playback_time( double ) override {}
+    void on_playback_time( double ) override {
+    }
 
-    void on_volume_change( float ) override {}
+    void on_volume_change( float ) override {
+    }
 };
 
 bool nosleep_callback::g_active = false;
 
+class nosleep_initquit : public initquit {
+public:
+    void on_init() override {
+        static_api_ptr_t<playback_control> pc;
+        nosleep_callback::refresh( pc->is_playing() && !pc->is_paused() );
+    }
+
+    void on_quit() override {
+        nosleep_callback::refresh( false );
+    }
+};
+
 static play_callback_static_factory_t<nosleep_callback> g_nosleep_callback_factory;
+static initquit_factory_t<nosleep_initquit> g_nosleep_initquit_factory;
 
 DECLARE_COMPONENT_VERSION(
     "NoSleep (modern)",
