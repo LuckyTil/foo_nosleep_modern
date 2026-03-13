@@ -7,7 +7,8 @@
 #include <foobar2000.h>
 
 class nosleep_callback : public play_callback_static {
-    static bool g_active;
+    static bool g_active_SR;
+    static bool g_active_ER;
     static HANDLE g_power_request;
 
     static bool ensure_power_request() {
@@ -26,20 +27,40 @@ class nosleep_callback : public play_callback_static {
 
 public:
     static void refresh( bool active ) {
-        if( g_active == active ) return;
-
-        if( !ensure_power_request() ) {
-            return;
-        }
-
         if( active ) {
-            if( PowerSetRequest( g_power_request, PowerRequestSystemRequired ) ) {
-                g_active = true;
+            if( !ensure_power_request() ) {
+                return;
+            }
+
+            if( !g_active_SR ) {
+                if( PowerSetRequest( g_power_request, PowerRequestSystemRequired ) ) {
+                    g_active_SR = true;
+                }
+            }
+
+            if( !g_active_ER ) {
+                if( PowerSetRequest( g_power_request, PowerRequestExecutionRequired ) ) {
+                    g_active_ER = true;
+                }
             }
         }
         else {
-            if( PowerClearRequest( g_power_request, PowerRequestSystemRequired ) ) {
-                g_active = false;
+            if( g_power_request == INVALID_HANDLE_VALUE ) {
+                g_active_SR = false;
+                g_active_ER = false;
+                return;
+            }
+
+            if( g_active_SR ) {
+                if( PowerClearRequest( g_power_request, PowerRequestSystemRequired ) ) {
+                    g_active_SR = false;
+                }
+            }
+
+            if( g_active_ER ) {
+                if( PowerClearRequest( g_power_request, PowerRequestExecutionRequired ) ) {
+                    g_active_ER = false;
+                }
             }
         }
     }
@@ -52,7 +73,8 @@ public:
             g_power_request = INVALID_HANDLE_VALUE;
         }
 
-        g_active = false;
+        g_active_SR = false;
+        g_active_ER = false;
     }
 
     virtual ~nosleep_callback() noexcept {
@@ -60,11 +82,10 @@ public:
     }
 
     unsigned get_flags() override {
-        return
-            flag_on_playback_starting |
-            flag_on_playback_new_track |
-            flag_on_playback_pause |
-            flag_on_playback_stop;
+        return flag_on_playback_starting
+            | flag_on_playback_new_track
+            | flag_on_playback_pause
+            | flag_on_playback_stop;
     }
 
     void on_playback_starting( play_control::t_track_command, bool paused ) override {
@@ -102,7 +123,8 @@ public:
     }
 };
 
-bool nosleep_callback::g_active = false;
+bool nosleep_callback::g_active_SR = false;
+bool nosleep_callback::g_active_ER = false;
 HANDLE nosleep_callback::g_power_request = INVALID_HANDLE_VALUE;
 
 #pragma warning(push)

@@ -7,12 +7,12 @@
 
 #define NUM_FILE_MAJOR          1
 #define NUM_FILE_MINOR          0
-#define NUM_FILE_PATCH          4
+#define NUM_FILE_PATCH          5
 #define NUM_FILE_PRERELEASE     0
 
 #define NUM_PRODUCT_MAJOR       1
 #define NUM_PRODUCT_MINOR       0
-#define NUM_PRODUCT_PATCH       4
+#define NUM_PRODUCT_PATCH       5
 #define NUM_PRODUCT_PRERELEASE  0
 
 #define STR_RELEASE_TAG         ""
