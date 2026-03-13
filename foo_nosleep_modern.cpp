@@ -8,22 +8,54 @@
 
 class nosleep_callback : public play_callback_static {
     static bool g_active;
+    static HANDLE g_power_request;
+
+    static bool ensure_power_request() {
+        if( g_power_request != INVALID_HANDLE_VALUE ) {
+            return true;
+        }
+
+        REASON_CONTEXT rc = {};
+        rc.Version = POWER_REQUEST_CONTEXT_VERSION;
+        rc.Flags = POWER_REQUEST_CONTEXT_SIMPLE_STRING;
+        rc.Reason.SimpleReasonString = const_cast<LPWSTR>(L"foobar2000 playback is active");
+
+        g_power_request = PowerCreateRequest( &rc );
+        return g_power_request != INVALID_HANDLE_VALUE;
+    }
 
 public:
     static void refresh( bool active ) {
         if( g_active == active ) return;
 
-        g_active = active;
+        if( !ensure_power_request() ) {
+            return;
+        }
 
-        const EXECUTION_STATE state = active
-                                          ? (ES_CONTINUOUS | ES_SYSTEM_REQUIRED)
-                                          : ES_CONTINUOUS;
-
-        const EXECUTION_STATE prev = ::SetThreadExecutionState( state );
-        (void)prev;
+        if( active ) {
+            if( PowerSetRequest( g_power_request, PowerRequestSystemRequired ) ) {
+                g_active = true;
+            }
+        }
+        else {
+            if( PowerClearRequest( g_power_request, PowerRequestSystemRequired ) ) {
+                g_active = false;
+            }
+        }
     }
 
-    ~nosleep_callback() noexcept {
+    static void shutdown() {
+        refresh( false );
+
+        if( g_power_request != INVALID_HANDLE_VALUE ) {
+            CloseHandle( g_power_request );
+            g_power_request = INVALID_HANDLE_VALUE;
+        }
+
+        g_active = false;
+    }
+
+    virtual ~nosleep_callback() noexcept {
         refresh( false );
     }
 
@@ -71,27 +103,44 @@ public:
 };
 
 bool nosleep_callback::g_active = false;
+HANDLE nosleep_callback::g_power_request = INVALID_HANDLE_VALUE;
+
+#pragma warning(push)
+#pragma warning(disable: 4265)
 
 class nosleep_initquit : public initquit {
 public:
+    nosleep_initquit() = default;
+    nosleep_initquit( const nosleep_initquit& ) = delete;
+    nosleep_initquit& operator=( const nosleep_initquit& ) = delete;
+    nosleep_initquit( nosleep_initquit&& ) = delete;
+    nosleep_initquit& operator=( nosleep_initquit&& ) = delete;
+
     void on_init() override {
         static_api_ptr_t<playback_control> pc;
         nosleep_callback::refresh( pc->is_playing() && !pc->is_paused() );
     }
 
     void on_quit() override {
-        nosleep_callback::refresh( false );
+        nosleep_callback::shutdown();
     }
 };
 
+#pragma warning(pop)
+
 static play_callback_static_factory_t<nosleep_callback> g_nosleep_callback_factory;
 static initquit_factory_t<nosleep_initquit> g_nosleep_initquit_factory;
+
+#pragma warning(push)
+#pragma warning(disable: 4265 5026 5027)
 
 DECLARE_COMPONENT_VERSION(
     "NoSleep (modern)",
     STR_COMPONENT_VERSION_SHORT,
     "Disable automatic system sleep while foobar2000 playback is running"
 );
+
+#pragma warning(pop)
 
 VALIDATE_COMPONENT_FILENAME( "foo_nosleep_modern.dll" );
 
