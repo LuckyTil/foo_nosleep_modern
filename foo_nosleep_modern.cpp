@@ -159,7 +159,7 @@ static initquit_factory_t<nosleep_initquit> g_nosleep_initquit_factory;
 DECLARE_COMPONENT_VERSION(
     "NoSleep (modern)",
     STR_COMPONENT_VERSION_SHORT,
-    "Disable automatic system sleep while foobar2000 playback is running"
+    "Disable automatic system sleep while foobar2000 playback is running."
 );
 
 #pragma warning(pop)
