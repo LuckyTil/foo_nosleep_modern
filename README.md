@@ -70,7 +70,9 @@ To create the component first build the x86 configuration and next the x64 confi
 ## Change Log
 
 v1.0.5, 2026-03-13
-* Use *PowerRequestSystemRequired and PowerRequestExecutionRequired
+
+* Use PowerRequestSystemRequired and PowerRequestExecutionRequired
+
 v1.0.3, 2026-03-12
 
 * Initial release.
