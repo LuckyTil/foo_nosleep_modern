@@ -5,7 +5,7 @@
 ## Requirements
 
 * Tested on Microsoft Windows 7 and later.
-* [foobar2000](https://www.foobar2000.org/download) v1.6.16 or later (32 or 64-bit). ![foobar2000](https://www.foobar2000.org/button-small.png)
+* [foobar2000](https://www.foobar2000.org/download) v2.0 or later (32 or 64-bit). ![foobar2000](https://www.foobar2000.org/button-small.png)
 
 ## Getting started
 
