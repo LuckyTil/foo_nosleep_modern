@@ -11,11 +11,11 @@
 
 ### Installation
 
-* Double-click `foo_nosleep_modern.fbk2-component`.
+* Double-click `foo_nosleep_modern.fb2k-component`.
 
 or
 
-* Import `foo_nosleep_modern.fbk2-component` into foobar2000 using the "*File / Preferences / Components / Install...*" menu item.
+* Import `foo_nosleep_modern.fb2k-component` into foobar2000 using the "*File / Preferences / Components / Install...*" menu item.
 
 ## Links
 
