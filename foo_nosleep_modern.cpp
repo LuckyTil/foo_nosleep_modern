@@ -8,7 +8,7 @@
 #include <SDK/cfg_var.h>
 #include <SDK/preferences_page.h>
 #include <helpers/atl-misc.h>
-#include <helpers\DarkMode.h>
+#include <helpers/DarkMode.h>
 
 constexpr GUID guid_cfg_prevent_display_off = {
     0x778054fd, 0x6ecf, 0x4835, { 0x90, 0x7f, 0x82, 0x18, 0x70, 0x6d, 0x7b, 0x9a }
@@ -213,9 +213,8 @@ public:
     nosleep_preferences_page_instance( nosleep_preferences_page_instance&& ) = delete;
     nosleep_preferences_page_instance& operator=( nosleep_preferences_page_instance&& ) = delete;
 
-    nosleep_preferences_page_instance( HWND parent, preferences_page_callback::ptr callback )
+    explicit nosleep_preferences_page_instance( preferences_page_callback::ptr callback )
         : m_callback( std::move( callback ) ) {
-        PFC_ASSERT( Create( parent ) != NULL );
     }
 
     enum { IDD = IDD_PREFERENCES };
@@ -224,10 +223,6 @@ public:
         MSG_WM_INITDIALOG( OnInitDialog )
         COMMAND_HANDLER_EX( IDC_PREVENT_DISPLAY_OFF, BN_CLICKED, OnCheckboxClicked )
     END_MSG_MAP()
-
-    fb2k::hwnd_t get_wnd() override {
-        return m_hWnd;
-    }
 
     t_uint32 get_state() override {
         t_uint32 state = preferences_state::resettable | preferences_state::dark_mode_supported;
@@ -250,6 +245,7 @@ public:
 
 private:
     BOOL OnInitDialog( CWindow, LPARAM ) {
+        m_dark.AddDialogWithControls( m_hWnd );
         CheckDlgButton( IDC_PREVENT_DISPLAY_OFF, cfg_prevent_display_off ? BST_CHECKED : BST_UNCHECKED );
         return FALSE;
     }
@@ -271,23 +267,19 @@ private:
     }
 
     const preferences_page_callback::ptr m_callback;
+    fb2k::CDarkModeHooks m_dark;
 };
 
 #pragma warning(push)
 #pragma warning(disable: 4265)
 
-class nosleep_preferences_page : public preferences_page_v4 {
+class nosleep_preferences_page : public preferences_page_impl<nosleep_preferences_page_instance> {
 public:
     nosleep_preferences_page() = default;
     nosleep_preferences_page( const nosleep_preferences_page& ) = delete;
     nosleep_preferences_page& operator=( const nosleep_preferences_page& ) = delete;
     nosleep_preferences_page( nosleep_preferences_page&& ) = delete;
     nosleep_preferences_page& operator=( nosleep_preferences_page&& ) = delete;
-
-    preferences_page_instance::ptr
-    instantiate( fb2k::hwnd_t parent, preferences_page_callback::ptr callback ) override {
-        return fb2k::service_new_window<nosleep_preferences_page_instance>( parent, callback );
-    }
 
     const char* get_name() override {
         return STR_COMPONENT_NAME;
