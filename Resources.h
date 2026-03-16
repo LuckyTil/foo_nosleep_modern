@@ -6,13 +6,13 @@
 #define TOSTRING(x) TOSTRING_IMPL(x)
 
 #define NUM_FILE_MAJOR          1
-#define NUM_FILE_MINOR          0
-#define NUM_FILE_PATCH          6
+#define NUM_FILE_MINOR          1
+#define NUM_FILE_PATCH          0
 #define NUM_FILE_PRERELEASE     0
 
 #define NUM_PRODUCT_MAJOR       1
-#define NUM_PRODUCT_MINOR       0
-#define NUM_PRODUCT_PATCH       6
+#define NUM_PRODUCT_MINOR       1
+#define NUM_PRODUCT_PATCH       0
 #define NUM_PRODUCT_PRERELEASE  0
 
 #define STR_RELEASE_TAG         ""
@@ -57,14 +57,4 @@
 #define IDD_PREFERENCES             1000
 #define IDD_PREFERENCES_NAME        STR_COMPONENT_NAME
 
-#define IDC_SAMPLES_PATH            IDD_PREFERENCES + 1
-#define IDC_SAMPLES_PATH_SELECT     IDC_SAMPLES_PATH + 1
-
-#define IDC_PLAYBACK_MODE           IDC_SAMPLES_PATH_SELECT + 1
-#define IDC_LOOP_COUNT              IDC_PLAYBACK_MODE + 1
-#define IDC_FADE_OUT_DURATION       IDC_LOOP_COUNT + 1
-
-#define IDC_SYNTHESIS_RATE          IDC_FADE_OUT_DURATION + 1
-
-#define IDC_USE_PPS                 IDC_SYNTHESIS_RATE + 1
-#define IDC_USE_SSG                 IDC_USE_PPS + 1
+#define IDC_PREVENT_DISPLAY_OFF     IDD_PREFERENCES + 1

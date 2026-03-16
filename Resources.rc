@@ -42,3 +42,10 @@ filesubtype     VFT2_UNKNOWN
         value "Translation", 0x409, 1252    // U.S. English, Multilingual character set
     }
 }
+
+IDD_PREFERENCES DIALOGEX 0, 0, 230, 54
+style DS_SHELLFONT | WS_CHILD
+font 8, "MS Shell Dlg", 400, 0, 1
+{
+    control "Prevent the display from turning off", IDC_PREVENT_DISPLAY_OFF, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 7, 7, 155, 10
+}

@@ -99,8 +99,7 @@ elseif ($Platform -eq 'Win32')
 }
 else
 {
-    Write-Host "Unknown platform: $Platform";
-    exit;
+    throw "Unknown platform: $Platform";
 }
 
 $ArchivePath = "../out/$TargetName.fb2k-component";
