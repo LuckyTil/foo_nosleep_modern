@@ -11,7 +11,7 @@ IDD_PREFERENCES dialogex 0, 0, 0, 0
 style DS_SHELLFONT | WS_CHILD
 font 8, "MS Shell Dlg", 400, 0, 1
 {
-    control "Prevent the display from turning off while playback is running", IDC_PREVENT_DISPLAY_OFF, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 7, 7, 155, 10
+    control "Prevent the display from turning off while playback is running", IDC_PREVENT_DISPLAY_OFF, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 7, 7, 220, 10
 }
 
 VS_VERSION_INFO versioninfo
