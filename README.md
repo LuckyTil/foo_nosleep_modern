@@ -55,7 +55,7 @@ Create the following directory structure:
 * `3rdParty/WTL10_10320` contains WTL 10.0.10320.
 * `bin` contains a portable version of foobar2000 64-bit for debugging purposes.
 * `bin/x86` contains a portable version of foobar2000 32-bit for debugging purposes.
-* `foo_input_modern` contains the [Git](https://github.com/LuckyTIL/foo_nosleep_modern) repository.
+* `foo_nosleep_modern` contains the [Git](https://github.com/LuckyTIL/foo_nosleep_modern) repository.
 * `out` receives a deployable version of the component.
 * `sdk` contains the foobar2000 SDK.
 
