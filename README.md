@@ -46,9 +46,8 @@ Create the following directory structure:
 
     3rdParty
         WTL10_10320
-    bin
-    bin.x86
     foo_nosleep_modern
+    int
     out
     sdk
 
