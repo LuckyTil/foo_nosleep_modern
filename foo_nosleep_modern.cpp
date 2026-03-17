@@ -38,8 +38,8 @@ class nosleep_runtime {
     }
 
     static void refresh_main_thread( bool playback_active, bool prevent_display_off ) {
-        const bool have_power_request = g_power_request != INVALID_HANDLE_VALUE || (playback_active &&
-            ensure_power_request());
+        const bool have_power_request = g_power_request != INVALID_HANDLE_VALUE
+            || (playback_active && ensure_power_request());
 
         if( playback_active ) {
             if( have_power_request && !g_active_SR
@@ -100,7 +100,7 @@ public:
     }
 
     static void refresh_from_playback_state() {
-        static_api_ptr_t<playback_control> pc;
+        const static_api_ptr_t<playback_control> pc;
         refresh( pc->is_playing() && !pc->is_paused() );
     }
 
