@@ -69,8 +69,8 @@ To create the component first build the x86 configuration and next the x64 confi
 
 v1.1.2, 2026-03-17
 
-* Add preferences page.
-* Add "Prevent the display from turning off while playback is running" parameter.
+* Preferences page added.
+* "Prevent the display from turning off while playback is running" parameter added.
 
 v1.0.6, 2026-03-13
 
