@@ -307,6 +307,8 @@ DECLARE_COMPONENT_VERSION(
     "NoSleep (modern)",
     STR_COMPONENT_VERSION_SHORT,
     "Disable automatic system sleep while foobar2000 playback is running."
+    "\n"
+    "Home page: https://github.com/LuckyTIL/foo_nosleep_modern"
 );
 
 #pragma warning(pop)
