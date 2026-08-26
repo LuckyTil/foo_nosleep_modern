@@ -83,11 +83,6 @@ class nosleep_runtime {
                 }
             }
         }
-
-        // Keep display idle and screensaver timers from expiring while playback is active.
-        SetThreadExecutionState( playback_active && prevent_display_off
-                                     ? ES_CONTINUOUS | ES_DISPLAY_REQUIRED
-                                     : ES_CONTINUOUS );
     }
 
 public:
@@ -152,7 +147,7 @@ public:
     }
 
     void on_playback_new_track( metadb_handle_ptr ) override {
-        refresh( true );
+        nosleep_runtime::refresh_from_playback_state();
     }
 
     void on_playback_stop( play_control::t_stop_reason ) override {
